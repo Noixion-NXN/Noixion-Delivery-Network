@@ -1,0 +1,34 @@
+@( title: String)(content: Html)
+
+<!DOCTYPE html>
+<html lang="@lang().code()">
+    <head>
+        <title>@title</title>
+
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="Tokenized Video Content Creation">
+
+        <title>Noixion Delivery Network</title>
+
+
+        <!-- Custom styles for this template -->
+        <link href="@routes.Assets.versioned("css/noixion.css")" rel="stylesheet">
+
+    </head>
+
+
+    <body id="page-top">
+
+            <!-- Navigation -->
+        <nav class="navbar navbar-expand-lg navbar-dark" id="brand">
+            <div class="container">
+                <div class="col-md-2">
+                    <a class="navbar-brand js-scroll-trigger logo" href="@routes.Application.index">Noixion Delivery Network</a>
+                </div>
+            </div>
+        </nav>
+        @content
+    </body>
+</html>

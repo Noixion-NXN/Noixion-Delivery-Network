@@ -1,0 +1,62 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+GET            /                                                          controllers.Application.index
+
+# Debug
+GET            /rt                                                        controllers.Application.routingTable
+
+# Storage capacity
+GET            /info                                                      controllers.Application.serverInformation
+
+# Registration
+GET            /register/:kad_key                                             controllers.Application.checkRegistration(kad_key: String)
+
+# Map static resources from the /public folder to the /assets URL path
+GET            /assets/*file                                              controllers.Assets.versioned(path="/public", file: Asset)
+GET            /public/fonts/*file                                        controllers.Assets.at(path="/public/fonts", file)
+
+# Access
+GET            /access                                                    controllers.AccessController.getAccessToken(request: Request)
+
+# Upload
+GET            /videos/newupload/:token                                   controllers.VideoUploadController.generateUploadToken(request: Request, token: String)
+GET            /videos/upload/:token                                      controllers.VideoUploadController.uploadStatus(request: Request, token: String)
+POST           /videos/upload/:token                                      controllers.VideoUploadController.upload(request: Request, token: String)
+OPTIONS        /videos/upload/:token                                      controllers.VideoUploadController.resumableConfig(token: String)
+POST           /videos/upload/:token/post                                 controllers.VideoUploadController.postUpload(request: Request, token: String)
+
+
+GET            /videos/confirm/:uploadToken/:accessToken/:videoKey        controllers.VideoProcessingController.startVideoProcessing(accessToken: String, uploadToken: String, videoKey: String, extraAudio: String ?= "false")
+
+# Processing
+GET            /videos/status/:videoKey                                   controllers.VideoProcessingController.getVideoProcessingStatus(videoKey: String)
+
+# Publishing
+GET            /videos/meta/:videoKey                                     controllers.VideoController.videoMetadata(videoKey: String)
+
+# Watch (token)
+GET            /watch/token/:videoKey/:token                              controllers.VideoController.getVideoWatchingToken(videoKey: String, token: String)
+
+# Mp4
+GET            /watch/stream/:resolution/:token                           controllers.VideoController.getVideoMp4Stream(request: Request, token: String, resolution: String)
+
+# HLS
+GET            /watch/hls/:resolution/:token/:file                        controllers.VideoController.getHLS(request: Request, token: String, resolution: String, file: String)
+
+#Mp3
+GET            /audio/delete/:videoKey                                    controllers.AudioController.deleteAudios(videoKey: String)
+GET            /audio/get/:videoKey/:lgCode                               controllers.AudioController.getAudio(videoKey: String, lgCode: String)
+
+# Schema
+GET            /watch/schema/:token                                       controllers.VideoController.videoSchema(token: String)
+
+# Previews
+GET            /preview/:videoKey                                         controllers.VideoController.videoPreview(videoKey: String)
+
+# Delete
+GET            /videos/delete/:videoKey/:token                            controllers.VideoProcessingController.deleteVideoProcessing(videoKey: String, token: String)
+GET            /videos/erase/:videoKey/:token                             controllers.VideoController.deleteVideo(videoKey: String, token: String)
+
